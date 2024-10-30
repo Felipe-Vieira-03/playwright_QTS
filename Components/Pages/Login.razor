@@ -1,0 +1,40 @@
+﻿@rendermode InteractiveServer
+@page "/login"
+
+<h3>Login</h3>
+
+<EditForm Model="@loginModel" OnValidSubmit="@HandleValidSubmit" FormName="cleber">
+    <DataAnnotationsValidator />
+    <ValidationSummary />
+
+    <div>
+        <label>Username:</label>
+        <input id="username" @bind-value="loginModel.Username" />
+    </div>
+    <div>
+        <label>Password:</label>
+        <input Id="senha" @bind-value="loginModel.Password" type="password" />
+    </div>
+    <button Id="botao" type="submit">Login</button>
+</EditForm>
+
+@if (!string.IsNullOrEmpty(loginModel.Message))
+{
+    <p id="welcomeMessage">@loginModel.Message</p>
+}
+
+@code {
+    private LoginModel loginModel = new();
+
+    private void HandleValidSubmit()
+    {
+        loginModel.Message = $"Bem-vindo, {loginModel.Username}!";
+    }
+
+    public class LoginModel
+    {
+        public string Username { get; set; }
+        public string Password { get; set; }
+        public string Message { get; set; }
+    }
+}
